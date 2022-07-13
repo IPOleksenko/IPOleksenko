@@ -2,7 +2,7 @@
 
 <img align="right" alt="IPOleksenko's GitHub Stats" src="https://github-readme-stats.vercel.app/api?username=IPOleksenko&theme=dark&hide_border=true" unselectable="on"/> 
 
-<img alt="IPOleksenko's GitHub Stand" src="https://github-profile-trophy.vercel.app/api?username=IPOleksenko&column=5&theme=flat" unselectable="on"/>
+<img alt="IPOleksenko's GitHub Stand" src="https://github-profile-trophy.vercel.app/api?username=IPOleksenko&column=3&theme=flat" unselectable="on"/>
 
 ---
 
