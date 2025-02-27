@@ -1,0 +1,62 @@
+name: Update Languages in README
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get list of languages by usage
+        run: |
+          REPOS=$(curl -s "https://api.github.com/users/IPOleksenko/repos?per_page=100" | jq -r '.[].name')
+
+          declare -A LANG_COUNT
+
+          for REPO in $REPOS; do
+            LANG_DATA=$(curl -s "https://api.github.com/repos/IPOleksenko/$REPO/languages")
+            
+            for LANG in $(echo "$LANG_DATA" | jq -r 'keys[]'); do
+              BYTES=$(echo "$LANG_DATA" | jq -r ".\"$LANG\"")
+              LANG_COUNT[$LANG]=$(( ${LANG_COUNT[$LANG]:-0} + BYTES ))
+            done
+          done
+
+          SORTED_LANGS=$(for LANG in "${!LANG_COUNT[@]}"; do
+            echo "${LANG_COUNT[$LANG]} $LANG"
+          done | sort -rn | awk '{print $2}')
+
+          LANGS_HTML=""
+          for LANG in $SORTED_LANGS; do
+            LOGO=$(echo "$LANG" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -d '#+')
+            BADGE_URL="https://img.shields.io/badge/${LANG// /_}-blue?style=for-the-badge&logo=$LOGO&logoColor=white"
+            LANGS_HTML+="<img src=\"$BADGE_URL\" alt=\"$LANG\" /> "
+          done
+
+          if [[ -n "$LANGS_HTML" ]]; then
+            CONTENT="## 🛠 Languages ​​used in projects\n<p align=\"center\">\n$LANGS_HTML\n</p>"
+          else
+            CONTENT="## 🛠 Languages ​​used in projects\n<p align=\"center\">No languages found</p>"
+          fi
+
+          sed -i '/<!-- LANGUAGES-START -->/,/<!-- LANGUAGES-END -->/c\<!-- LANGUAGES-START -->\n'"$CONTENT"'\n<!-- LANGUAGES-END -->' README.md
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions"
+          git add README.md
+          git commit -m "Updated languages list by usage" || exit 0
+      
+      - name: Pull remote changes
+        run: git pull --rebase --autostash || echo "No remote changes to rebase."
+      
+      - name: Push changes
+        run: git push
