@@ -4,7 +4,6 @@
 
 <p align="center">
     <img src="https://github-readme-stats.vercel.app/api?username=IPOleksenko&theme=tokyonight&hide_border=true&show_icons=true&count_private=true" width="50%" />
-    <img src="https://github-profile-trophy.vercel.app/api?username=IPOleksenko&column=5&theme=tokyonight&margin-w=15" width="50%" />
 </p>
 
 <!-- LANGUAGES-START -->
