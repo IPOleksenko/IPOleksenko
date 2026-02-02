@@ -2,10 +2,6 @@
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=28&pause=1000&color=38B6FF&center=true&vCenter=true&width=600&lines=IPOleksenko;Welcome+to+my+GitHub!" alt="Typing SVG" />
 </h1>
 
-<p align="center">
-    <img src="https://github-readme-stats.vercel.app/api?username=IPOleksenko&theme=tokyonight&hide_border=true&show_icons=true&count_private=true" width="50%" />
-</p>
-
 <!-- LANGUAGES-START -->
 ## 🛠 Languages ​​used in projects
 <p align="center">
